@@ -4,11 +4,17 @@
         "declarationDir": "./dist",
         "module": "commonjs",
         "noImplicitAny": true,
-        "lib": ["es2017", "es7", "es6"],
+        "lib": [
+            "es2016",
+            "esnext.asynciterable"
+        ],
         "outDir": "./dist",
         "target": "es5",
         "moduleResolution": "node",
         "strict": true,
+        "types": [
+            "jest"
+        ]
     },
     "typedocOptions": {
         "mode": "modules",

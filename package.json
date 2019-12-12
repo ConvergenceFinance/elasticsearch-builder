@@ -1,5 +1,5 @@
 {
-    "name": "elastic-search-builder",
+    "name": "@convergence-finance/elastic-search-builder",
     "version": "1.0.0",
     "description": "A simple elastic-search builder library to build ElasticSearch search and index JSON bodies.",
     "main": "./dist/index.js",
