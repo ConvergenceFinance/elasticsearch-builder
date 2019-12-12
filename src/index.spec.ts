@@ -90,6 +90,31 @@ describe("ElasticSearch Builder", () => {
         expect(searchBody).toStrictEqual(expectedSearchBody);
     });
 
+    it("Should return a valid ElasticSearch Aggregate object (sum).", () => {
+        expect.assertions(1);
+        const elasticSearchSearchBodyBuilder = ElasticSearchBuilder.instance().buildSearchBody();
+
+        const searchBody = elasticSearchSearchBodyBuilder
+            .aggregate()
+                .name("total")
+                    .sum("price")
+                .end()
+            .end()
+            .build();
+
+        const expectedSearchBody = {
+            aggs: {
+                total: {
+                    sum: {
+                        field: "price"
+                    }
+                }
+            }
+        };
+
+        expect(searchBody).toStrictEqual(expectedSearchBody);
+    });
+
     it("Should return a valid ElasticSearch Aggregate object (with agg).", () => {
         expect.assertions(1);
         const elasticSearchSearchBodyBuilder = ElasticSearchBuilder.instance().buildSearchBody();

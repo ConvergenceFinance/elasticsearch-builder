@@ -5,6 +5,7 @@ import NestedAggType from "./agg-type/nested.agg.type";
 import TermsAggType from "./agg-type/terms.agg.type";
 import ElasticSearchAggregateBuilder from "./aggregate.builder";
 import ReverseNestedAggType from "./agg-type/reverse-nested.agg.type";
+import SumAggType from "./agg-type/sum.agg.type";
 
 export default class AggBuilder {
     private name: string;
@@ -15,6 +16,12 @@ export default class AggBuilder {
     constructor(name: string, builder: ElasticSearchAggregateBuilder<any>) {
         this.name = name;
         this.builder = builder;
+    }
+
+    public sum(field: string) {
+        const sumAggType = new SumAggType(field);
+        this.aggType = sumAggType;
+        return this;
     }
 
     public nested(path: string) {

@@ -17,6 +17,7 @@ import CardinalityAggType from "./search-body/aggregate/agg-type/cardinality.agg
 import AggBuilder from "./search-body/aggregate/agg.builder";
 import ElasticSearchAggregateBuilder from "./search-body/aggregate/aggregate.builder";
 import ReverseNestedAggType from "./search-body/aggregate/agg-type/reverse-nested.agg.type";
+import SumAggType from "./search-body/aggregate/agg-type/sum.agg.type";
 
 export interface BuilderType {}
 
@@ -24,7 +25,8 @@ export type ESAggTypes = NestedAggType |
     FilterAggType |
     TermsAggType |
     CardinalityAggType |
-    ReverseNestedAggType;
+    ReverseNestedAggType |
+    SumAggType;
 
 export type ESAggBuilderTypes = ElasticSearchSearchBodyBuilder | ElasticSearchAggregateBuilder<any> | AggBuilder;
 
