@@ -1,0 +1,27 @@
+{
+    "name": "elastic-search-builder",
+    "version": "1.0.0",
+    "description": "A simple elastic-search builder library to build ElasticSearch search and index JSON bodies.",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "/dist"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ConvergenceFinance/elasticsearch-builder"
+    },
+    "scripts": {
+        "build": "tsc",
+        "prepare": "npm run test && npm run build",
+        "test": "jest --coverage"
+    },
+    "author": "Aaron de Mello <aaron.demello@convergence.finance",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/jest": "24.0.23",
+        "jest": "24.9.0",
+        "ts-jest": "24.2.0",
+        "typescript": "3.7.3"
+    }
+}
