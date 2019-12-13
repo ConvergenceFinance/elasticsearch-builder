@@ -18,7 +18,7 @@ export default class ElasticSearchAggregateBuilder<T extends ESAggBuilderTypes> 
     public build(): any {
         let aggs: any = {};
         if (this.aggBuilder.length > 0) {
-            this.aggBuilder.forEach((agg) => aggs = {...agg.build()} );
+            this.aggBuilder.forEach((agg) => aggs = {...aggs, ...agg.build()} );
         }
         return {
             aggs
