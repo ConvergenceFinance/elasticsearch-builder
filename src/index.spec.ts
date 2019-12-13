@@ -90,6 +90,31 @@ describe("ElasticSearch Builder", () => {
         expect(searchBody).toStrictEqual(expectedSearchBody);
     });
 
+    it("Should return a valid ElasticSearch Aggregate object (avg).", () => {
+        expect.assertions(1);
+        const elasticSearchSearchBodyBuilder = ElasticSearchBuilder.instance().buildSearchBody();
+
+        const searchBody = elasticSearchSearchBodyBuilder
+            .aggregate()
+                .name("average")
+                    .avg("price")
+                .end()
+            .end()
+            .build();
+
+        const expectedSearchBody = {
+            aggs: {
+                average: {
+                    avg: {
+                        field: "price"
+                    }
+                }
+            }
+        };
+
+        expect(searchBody).toStrictEqual(expectedSearchBody);
+    });
+
     it("Should return a valid ElasticSearch Aggregate object (sum).", () => {
         expect.assertions(1);
         const elasticSearchSearchBodyBuilder = ElasticSearchBuilder.instance().buildSearchBody();
@@ -107,6 +132,80 @@ describe("ElasticSearch Builder", () => {
                 total: {
                     sum: {
                         field: "price"
+                    }
+                }
+            }
+        };
+
+        expect(searchBody).toStrictEqual(expectedSearchBody);
+    });
+
+    it("Should return a valid ElasticSearch Aggregate object (range).", () => {
+        expect.assertions(1);
+        const elasticSearchSearchBodyBuilder = ElasticSearchBuilder.instance().buildSearchBody();
+
+        const searchBody = elasticSearchSearchBodyBuilder
+            .aggregate()
+                .name("total")
+                    .range("test", [
+                        { key: "1", from: 0, to: 10 },
+                        { key: "2", from: 10 }
+                    ])
+                .end()
+            .end()
+            .build();
+
+        const expectedSearchBody = {
+            aggs: {
+                total: {
+                    range: {
+                        field: "test",
+                        ranges: [
+                            { key: "1", from: 0, to: 10 },
+                            { key: "2", from: 10 }
+                        ]
+                    }
+                }
+            }
+        };
+
+        expect(searchBody).toStrictEqual(expectedSearchBody);
+    });
+
+    it("Should return a valid ElasticSearch Aggregate object (bucketSort).", () => {
+        expect.assertions(1);
+        const elasticSearchSearchBodyBuilder = ElasticSearchBuilder.instance().buildSearchBody();
+
+        const searchBody = elasticSearchSearchBodyBuilder
+            .aggregate()
+                .name("bucketSortTest")
+                    .bucketSort(
+                        bucketSort => bucketSort
+                            .field("test", "asc")
+                            .field("test2"),
+                        1,
+                        10,
+                        "skip"
+                    )
+                .end()
+            .end()
+            .build();
+
+        const expectedSearchBody = {
+            aggs: {
+                bucketSortTest: {
+                    bucket_sort: {
+                        sort: [
+                            {
+                                test: {
+                                    order: "asc"
+                                }
+                            },
+                            "test2"
+                        ],
+                        from: 1,
+                        size: 10,
+                        gap_policy: "skip"
                     }
                 }
             }

@@ -1,5 +1,6 @@
+import { ESAggTypes } from "../../..";
 
-export default class CardinalityAggType {
+export default class CardinalityAggType implements ESAggTypes {
     private field: string;
 
     constructor(

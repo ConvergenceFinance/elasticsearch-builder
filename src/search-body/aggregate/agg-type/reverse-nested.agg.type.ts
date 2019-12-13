@@ -1,5 +1,6 @@
+import { ESAggTypes } from "../../..";
 
-export default class ReverseNestedAggType {
+export default class ReverseNestedAggType implements ESAggTypes {
     constructor() {}
 
     public build() {

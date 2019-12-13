@@ -1,5 +1,6 @@
+import { ESAggTypes } from "../../..";
 
-export default class NestedAggType {
+export default class NestedAggType implements ESAggTypes {
     private path: string;
 
     constructor(path: string) {

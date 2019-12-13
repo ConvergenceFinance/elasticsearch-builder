@@ -1,6 +1,6 @@
 import { ESAggTypes } from "../../..";
 
-export default class SumAggType implements ESAggTypes {
+export default class AvgAggType implements ESAggTypes {
     private field: string;
 
     constructor(
@@ -10,12 +10,12 @@ export default class SumAggType implements ESAggTypes {
     }
 
     public build() {
-        const sum: any = {};
+        const avg: any = {};
         if (this.field !== null) {
-            sum.field = this.field;
+            avg.field = this.field;
         }
         return {
-            sum
+            avg
         };
     }
 }

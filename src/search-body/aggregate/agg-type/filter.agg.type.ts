@@ -1,7 +1,8 @@
 import ElasticSearchBoolBuilder from "../../bool.builder";
 import AggBuilder from "../agg.builder";
+import { ESAggTypes } from "../../..";
 
-export default class FilterAggType {
+export default class FilterAggType implements ESAggTypes {
     private boolBuilder: ElasticSearchBoolBuilder<this> | null = null;
     private builder: AggBuilder;
 

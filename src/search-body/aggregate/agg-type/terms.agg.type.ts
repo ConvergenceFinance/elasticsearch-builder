@@ -1,5 +1,6 @@
+import { ESAggTypes } from "../../..";
 
-export default class TermsAggType {
+export default class TermsAggType implements ESAggTypes {
     private field: string | null = null;
     private script: string | null = null;
     private sharedMinDocCount: number | null = null;

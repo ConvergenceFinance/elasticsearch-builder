@@ -6,6 +6,9 @@ import TermsAggType from "./agg-type/terms.agg.type";
 import ElasticSearchAggregateBuilder from "./aggregate.builder";
 import ReverseNestedAggType from "./agg-type/reverse-nested.agg.type";
 import SumAggType from "./agg-type/sum.agg.type";
+import RangeAggType, { ElasticSearchRange, RangeMethod } from "./agg-type/range.agg.type";
+import BucketSortAggType from "./agg-type/bucket-sort.agg.type";
+import AvgAggType from "./agg-type/avg.agg.type";
 
 export default class AggBuilder {
     private name: string;
@@ -16,6 +19,24 @@ export default class AggBuilder {
     constructor(name: string, builder: ElasticSearchAggregateBuilder<any>) {
         this.name = name;
         this.builder = builder;
+    }
+
+    public bucketSort(builder?: (bucketSortAggType: BucketSortAggType) => void, from: number | null = null, size: number | null = null, gapPolicy: string | null = null) {
+        const bucketSortAggType = new BucketSortAggType(builder, from, size, gapPolicy);
+        this.aggType = bucketSortAggType;
+        return this;
+    }
+
+    public range(field: string, ranges: Array<ElasticSearchRange> | RangeMethod) {
+        const rangeAggType = new RangeAggType(field, ranges);
+        this.aggType = rangeAggType;
+        return this;
+    }
+
+    public avg(field: string) {
+        const avgAggType = new AvgAggType(field);
+        this.aggType = avgAggType;
+        return this;
     }
 
     public sum(field: string) {
