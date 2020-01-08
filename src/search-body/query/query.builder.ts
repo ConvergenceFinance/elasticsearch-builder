@@ -9,9 +9,14 @@ export default class ElasticSearchQueryBuilder {
         this.builder = builder;
     }
 
-    public bool() {
+    public bool(): ElasticSearchBoolBuilder<this>;
+    public bool(builder: (boolBuilder: ElasticSearchBoolBuilder<this>) => ElasticSearchBoolBuilder<this>): this;
+    public bool(builder?: (boolBuilder: ElasticSearchBoolBuilder<this>) => ElasticSearchBoolBuilder<this>): ElasticSearchBoolBuilder<this> | this {
         const boolBuilder = new ElasticSearchBoolBuilder(this);
         this.boolBuilder = boolBuilder;
+        if (typeof builder !== "undefined") {
+            return builder(boolBuilder).end();
+        }
         return boolBuilder;
     }
 

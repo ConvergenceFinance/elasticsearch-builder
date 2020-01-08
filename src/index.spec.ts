@@ -506,6 +506,47 @@ describe("ElasticSearch Builder", () => {
         expect(searchBody).toStrictEqual(expectedSearchBody);
     });
 
+    it("Should return a valid ElasticSearch Query object (bool(must[match,match])).", () => {
+        expect.assertions(1);
+        const elasticSearchSearchBodyBuilder = ElasticSearchBuilder.instance().buildSearchBody();
+
+        const searchBody = elasticSearchSearchBodyBuilder
+            .query()
+                .bool(
+                    boolBuilder => {
+                        boolBuilder
+                            .must()
+                                .match("isActive", true)
+                                .match("status", 10)
+                            .end();
+
+                        return boolBuilder;
+                    }
+                )
+            .build();
+
+        const expectedSearchBody = {
+            query: {
+                bool: {
+                    must: [
+                        {
+                            match: {
+                                isActive: true
+                            }
+                        },
+                        {
+                            match: {
+                                status: 10
+                            }
+                        }
+                    ]
+                }
+            }
+        };
+
+        expect(searchBody).toStrictEqual(expectedSearchBody);
+    });
+
     it("Should return a valid ElasticSearch Query object (bool-must_not[match,match]).", () => {
         expect.assertions(1);
         const elasticSearchSearchBodyBuilder = ElasticSearchBuilder.instance().buildSearchBody();
