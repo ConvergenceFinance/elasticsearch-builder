@@ -9,6 +9,7 @@ import SumAggType from "./agg-type/sum.agg.type";
 import RangeAggType, { ElasticSearchRange, RangeMethod } from "./agg-type/range.agg.type";
 import BucketSortAggType from "./agg-type/bucket-sort.agg.type";
 import AvgAggType from "./agg-type/avg.agg.type";
+import ValueCountAggType from "./agg-type/value-count.agg.type";
 
 export default class AggBuilder {
     private name: string;
@@ -42,6 +43,12 @@ export default class AggBuilder {
     public sum(field: string) {
         const sumAggType = new SumAggType(field);
         this.aggType = sumAggType;
+        return this;
+    }
+
+    public valueCount(field: string) {
+        const valueCountAggType = new ValueCountAggType(field);
+        this.aggType = valueCountAggType;
         return this;
     }
 

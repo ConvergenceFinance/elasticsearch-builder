@@ -140,6 +140,31 @@ describe("ElasticSearch Builder", () => {
         expect(searchBody).toStrictEqual(expectedSearchBody);
     });
 
+    it("Should return a valid ElasticSearch Aggregate object (valueCount).", () => {
+        expect.assertions(1);
+        const elasticSearchSearchBodyBuilder = ElasticSearchBuilder.instance().buildSearchBody();
+
+        const searchBody = elasticSearchSearchBodyBuilder
+            .aggregate()
+                .name("total")
+                    .valueCount("price")
+                .end()
+            .end()
+            .build();
+
+        const expectedSearchBody = {
+            aggs: {
+                total: {
+                    value_count: {
+                        field: "price"
+                    }
+                }
+            }
+        };
+
+        expect(searchBody).toStrictEqual(expectedSearchBody);
+    });
+
     it("Should return a valid ElasticSearch Aggregate object (range).", () => {
         expect.assertions(1);
         const elasticSearchSearchBodyBuilder = ElasticSearchBuilder.instance().buildSearchBody();
