@@ -7,6 +7,7 @@ export default class TermsAggType implements ESAggTypes {
     private missing: string | null = null;
     private showTermDocCountError: boolean | null = null;
     private size: number | null = null;
+    private shardSize: number | null = null;
 
     constructor(
         field: string | null = null,
@@ -14,7 +15,8 @@ export default class TermsAggType implements ESAggTypes {
         missing: string | null = null,
         sharedMinDocCount: number | null = null,
         showTermDocCountError: boolean | null = null,
-        size: number | null = null
+        size: number | null = null,
+        shardSize: number | null = null
     ) {
         this.field = field;
         this.script = script;
@@ -22,6 +24,7 @@ export default class TermsAggType implements ESAggTypes {
         this.sharedMinDocCount = sharedMinDocCount;
         this.showTermDocCountError = showTermDocCountError;
         this.size = size;
+        this.shardSize = shardSize;
     }
 
     public build() {
@@ -46,6 +49,9 @@ export default class TermsAggType implements ESAggTypes {
         }
         if (this.size !== null) {
             terms.size = this.size;
+        }
+        if (this.shardSize !== null) {
+            terms.shard_size = this.shardSize
         }
         return {
             terms

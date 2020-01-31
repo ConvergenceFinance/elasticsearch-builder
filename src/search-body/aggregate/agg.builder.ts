@@ -70,9 +70,10 @@ export default class AggBuilder {
         missing: string | null = null,
         sharedMinDocCount: number | null = null,
         showTermDocCountError: boolean | null = null,
-        size: number | null = null
+        size: number | null = null,
+        shardSize: number | null = null
     ) {
-        const termsAggType = new TermsAggType(field, script, missing, sharedMinDocCount, showTermDocCountError, size);
+        const termsAggType = new TermsAggType(field, script, missing, sharedMinDocCount, showTermDocCountError, size, shardSize);
         this.aggType = termsAggType;
         return this;
     }
