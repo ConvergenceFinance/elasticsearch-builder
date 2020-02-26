@@ -422,7 +422,7 @@ describe("ElasticSearch Builder", () => {
                             .end()
                             .aggregate()
                                 .name("groupBy")
-                                    .terms("investors.historicalInstitution.sectors.keyword", null, "Other", 0, true)
+                                    .terms("investors.historicalInstitution.sectors.keyword", null, "Other", 0, true, null, null, { "test": "desc"})
                                     .aggregate()
                                         .name("totalUniqueInvestors")
                                             .cardinality("investors.historicalInstitution.id.keyword")
@@ -459,7 +459,10 @@ describe("ElasticSearch Builder", () => {
                                         field: "investors.historicalInstitution.sectors.keyword",
                                         shard_min_doc_count: 0,
                                         show_term_doc_count_error: true,
-                                        missing: "Other"
+                                        missing: "Other",
+                                        order: {
+                                            "test": "desc"
+                                        }
                                     },
                                     aggs: {
                                         totalUniqueInvestors: {
