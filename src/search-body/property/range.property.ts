@@ -1,8 +1,8 @@
 export type ESRanges = {
-    gt?: number;
-    gte?: number;
-    lt?: number;
-    lte?: number;
+    gt?: number | string;
+    gte?: number | string;
+    lt?: number | string;
+    lte?: number | string;
     range?: string;
     relation?: "INTERSECTS" | "CONTAINS" | "WITHIN",
     time_zone?: string;
