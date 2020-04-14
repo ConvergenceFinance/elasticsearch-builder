@@ -3,6 +3,10 @@ export type ESRanges = {
     gte?: number;
     lt?: number;
     lte?: number;
+    range?: string;
+    relation?: "INTERSECTS" | "CONTAINS" | "WITHIN",
+    time_zone?: string;
+    boost?: number;
 };
 
 export default class RangeProperty {
