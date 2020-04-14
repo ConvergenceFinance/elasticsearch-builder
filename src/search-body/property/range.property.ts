@@ -3,7 +3,7 @@ export type ESRanges = {
     gte?: number | string;
     lt?: number | string;
     lte?: number | string;
-    range?: string;
+    format?: string;
     relation?: "INTERSECTS" | "CONTAINS" | "WITHIN",
     time_zone?: string;
     boost?: number;
