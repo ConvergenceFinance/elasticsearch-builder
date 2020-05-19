@@ -5,6 +5,15 @@ export type ESQueryString = {
     tie_breaker?: number;
 };
 
+
+const escapeQueryString = (query: string) => {
+    let modifiedQuery = query;
+    modifiedQuery = modifiedQuery.replace(/(\>|\<)+/g, "");
+    modifiedQuery = modifiedQuery.replace(/(\+|\-|\=|\&&|\|\||\!|\(|\)|\{|\}\|\[|\]|\^|\"|\~|\*|\?|\:|\\|\/)+/g, "\\$1");
+
+    return modifiedQuery;
+} 
+
 export default class QueryStringProperty {
     private queryString: ESQueryString;
     constructor(queryString: ESQueryString) {
@@ -15,6 +24,8 @@ export default class QueryStringProperty {
         if (Object.keys(this.queryString).length === 0) {
             throw new Error("range() Error: You must specify gt/gte/lt/lte.");
         }
+
+        this.queryString.query = escapeQueryString(this.queryString.query);
 
         return {
             query_string: this.queryString

@@ -984,6 +984,66 @@ describe("ElasticSearch Builder", () => {
         expect(searchBody).toStrictEqual(expectedSearchBody);
     });
 
+    it("Should return a valid ElasticSearch Query object (bool-must-querystring) \w escaped chars.", () => {
+        expect.assertions(1);
+        const elasticSearchSearchBodyBuilder = ElasticSearchBuilder.instance().buildSearchBody();
+
+        const searchBody = elasticSearchSearchBodyBuilder
+            .query()
+                .bool()
+                    .must()
+                        .queryString({
+                            query: "This is + a string && that should\" be well - scaped <asdm> ! okay * now.",
+                            type: "best_fields",
+                            fields: [
+                                "name^100",
+                                "deal_investors.name^99",
+                                "institution.name^99",
+                                "snapshot^50",
+                                "overview^30",
+                                "sectors",
+                                "regions",
+                                "countries",
+                                "sdgs",
+                                "blending_approach_description",
+                                "impact_statement"
+                            ],
+                            tie_breaker: 0.3
+                        })
+                    .end()
+                .end()
+            .build();
+
+        const expectedSearchBody = {
+            query: {
+                bool: {
+                    must: {
+                        query_string: {
+                            query: `This is \\+ a string \\&& that should\\" be well \\- scaped asdm \\! okay \\* now.`,
+                            type: "best_fields",
+                            fields: [
+                                "name^100",
+                                "deal_investors.name^99",
+                                "institution.name^99",
+                                "snapshot^50",
+                                "overview^30",
+                                "sectors",
+                                "regions",
+                                "countries",
+                                "sdgs",
+                                "blending_approach_description",
+                                "impact_statement"
+                            ],
+                            tie_breaker: 0.3
+                        }
+                    }
+                }
+            }
+        };
+
+        expect(searchBody).toStrictEqual(expectedSearchBody);
+    });
+
     it("Should return a valid ElasticSearch Query object (bool-with-loop).", () => {
         expect.assertions(1);
         const elasticSearchSearchBodyBuilder = ElasticSearchBuilder.instance().buildSearchBody();
