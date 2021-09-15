@@ -18,8 +18,8 @@ export default class ElasticSearchSortBuilder<T = ElasticSearchSearchBodyBuilder
         return this;
     }
 
-    public script(source: string, params?: ScriptParams) {
-        const script = new ScriptProperty(source, params);
+    public script(source: string, params?: ScriptParams, type?: string, order?: "asc" | "desc") {
+        const script = new ScriptProperty(source, params, type, order);
         this.stack.push(script.build());
         return this;
     }

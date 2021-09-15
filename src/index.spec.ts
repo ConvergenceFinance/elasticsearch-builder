@@ -1179,7 +1179,7 @@ describe("ElasticSearch Builder", () => {
                 .end()
             .end()
             .sort()
-                .script("someSource", { someParam: 1 })
+                .script("someSource", { someParam: 1 }, "number", "desc")
                 .add("relevance", "desc")
                 .addByScore()
             .end()
@@ -1212,7 +1212,7 @@ describe("ElasticSearch Builder", () => {
                                 someParam: 1
                             }
                         },
-                        order: "asc",
+                        order: "desc",
                     }
                 },
                 { relevance: "desc" },
