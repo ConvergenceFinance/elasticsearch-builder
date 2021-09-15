@@ -1,6 +1,7 @@
+import ScriptProperty, { ScriptParams } from "./property/sort-script.property";
 import ElasticSearchSearchBodyBuilder from "./search-body.builder";
 
-type SortValue = { [key: string]: { order: "asc" | "desc" } | "asc" | "desc" } | string;
+type SortValue = { [key: string]: { order: "asc" | "desc" } | "asc" | "desc" } | ScriptProperty | string;
 
 export default class ElasticSearchSortBuilder<T = ElasticSearchSearchBodyBuilder> {
     private builder: T;
@@ -14,6 +15,12 @@ export default class ElasticSearchSortBuilder<T = ElasticSearchSearchBodyBuilder
         this.stack.push({
             [key]: value
         });
+        return this;
+    }
+
+    public script(source: string, params?: ScriptParams) {
+        const script = new ScriptProperty(source, params);
+        this.stack.push(script.build());
         return this;
     }
 

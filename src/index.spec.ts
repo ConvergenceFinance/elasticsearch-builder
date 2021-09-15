@@ -1166,6 +1166,63 @@ describe("ElasticSearch Builder", () => {
     });
 
 
+    it("Should return a valid ElasticSearch Query object (bool-must[match,match],sort-[_script,relevance-desc_score]).", () => {
+        expect.assertions(1);
+        const elasticSearchSearchBodyBuilder = ElasticSearchBuilder.instance().buildSearchBody();
+        const searchBody = elasticSearchSearchBodyBuilder
+            .query()
+                .bool()
+                    .must()
+                        .match("isActive", true)
+                        .match("status", 10)
+                    .end()
+                .end()
+            .end()
+            .sort()
+                .script("someSource", { someParam: 1 })
+                .add("relevance", "desc")
+                .addByScore()
+            .end()
+            .build();
+
+        const expectedSearchBody = {
+            query: {
+                bool: {
+                    must: [
+                        {
+                            match: {
+                                isActive: true
+                            }
+                        },
+                        {
+                            match: {
+                                status: 10
+                            }
+                        }
+                    ]
+                }
+            },
+            sort: [
+                {
+                    _script: {
+                        type: "number",
+                        script: {
+                            source: "someSource",
+                            params: {
+                                someParam: 1
+                            }
+                        },
+                        order: "asc",
+                    }
+                },
+                { relevance: "desc" },
+                "_score"
+            ]
+        };
+
+        expect(searchBody).toStrictEqual(expectedSearchBody);
+    });
+
     it("Should return a valid ElasticSearch Query object (bool-must-nestedObject).", () => {
         expect.assertions(1);
         const elasticSearchSearchBodyBuilder = ElasticSearchBuilder.instance().buildSearchBody();
