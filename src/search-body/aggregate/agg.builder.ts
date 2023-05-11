@@ -10,6 +10,8 @@ import RangeAggType, { ElasticSearchRange, RangeMethod } from "./agg-type/range.
 import BucketSortAggType from "./agg-type/bucket-sort.agg.type";
 import AvgAggType from "./agg-type/avg.agg.type";
 import ValueCountAggType from "./agg-type/value-count.agg.type";
+import CumulativeSumAggType from "./agg-type/cumulative-sum.agg.type";
+import HistogramAggType from "./agg-type/histogram.agg.type";
 
 export default class AggBuilder {
     private name: string;
@@ -43,6 +45,18 @@ export default class AggBuilder {
     public sum(field: string) {
         const sumAggType = new SumAggType(field);
         this.aggType = sumAggType;
+        return this;
+    }
+
+    public cumulative_sum(buckets_path: string) {
+        const cumulativeSumAggType = new CumulativeSumAggType(buckets_path);
+        this.aggType = cumulativeSumAggType;
+        return this;
+    }
+
+    public histogram(field: string, interval: number) {
+        const histogramAggType = new HistogramAggType(field, interval);
+        this.aggType = histogramAggType;
         return this;
     }
 
